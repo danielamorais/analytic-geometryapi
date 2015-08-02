@@ -1,3 +1,5 @@
-/home/danielamorais/Downloads/gs-rest-service-master/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Entity/Line.java
-/home/danielamorais/Downloads/gs-rest-service-master/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/API/LineAPI.java
-/home/danielamorais/Downloads/gs-rest-service-master/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Application.java
+/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Application.java
+/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Entity/Line.java
+/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/API/LineAPI.java
+/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Service/RelativePositions.java
+/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Entity/LineTest.java
