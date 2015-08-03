@@ -5,6 +5,7 @@ import javafx.geometry.Point3D;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.junit.Assert;
 import org.junit.Test;
+
 /**
  * Created by danielamorais on 03/08/15.
  */
@@ -74,16 +75,27 @@ public class RelativePositionsTest {
     }
 
     @Test
-    public void testAreDistinct_areDistinct() throws Exception{
+    public void testAreDistinct_areDistinct() throws Exception {
         Line lineOne = new Line().setPoint(new Point3D(1.0, 3.0, 1.0)).setVector(new Vector3D(-1.0, 2.0, -3.0));
-        Point3D point = new Point3D(1.0, 2.0 , 3.0);
+        Point3D point = new Point3D(1.0, 2.0, 3.0);
         Assert.assertEquals(true, new RelativePositions().areDistinct(point, lineOne));
     }
 
     @Test
-    public void testAreDistinct_coincidents() throws Exception{
+    public void testAreDistinct_coincidents() throws Exception {
         Line lineOne = new Line().setPoint(new Point3D(2.0, 0.0, 1.0)).setVector(new Vector3D(-4.0, 2.0, -2.0));
-        Point3D point = new Point3D(0.0, 1.0 , 0.0);
+        Point3D point = new Point3D(0.0, 1.0, 0.0);
         Assert.assertEquals(false, new RelativePositions().areDistinct(point, lineOne));
+    }
+
+    @Test
+    public void testIntersectingLines_getPoints() throws Exception {
+        Line lineOne = new Line().setPoint(new Point3D(0.0, 2.0, -1.0)).setVector(new Vector3D(1.0, -3.0, 3.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 1.0, 0.0)).setVector(new Vector3D(-1.0, 2.0, -2.0));
+
+        Point3D expected = new Point3D(1.0, -1.0, 2.0);
+        Point3D actual = new RelativePositions().intersectingLines(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+
     }
 }

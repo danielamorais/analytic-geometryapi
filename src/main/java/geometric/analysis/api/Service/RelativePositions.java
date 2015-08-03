@@ -1,5 +1,6 @@
 package geometric.analysis.api.Service;
 
+import com.google.gson.Gson;
 import geometric.analysis.api.Entity.Line;
 import javafx.geometry.Point3D;
 import org.apache.commons.math3.analysis.differentiation.JacobianFunction;
@@ -33,19 +34,26 @@ public class RelativePositions {
                     return "Coincidentes";
                 }
             } else {
-                return intersectingLines(lineOne, lineTwo);
+                System.out.println(new Gson().toJson(intersectingLines(lineOne, lineTwo)));
+                return "Concorrentes";
             }
         }
     }
 
-    private String intersectingLines(Line lineOne, Line lineTwo) {
-        double x = lineTwo.getPoint().getX() - lineOne.getPoint().getX();
-        double y = lineTwo.getPoint().getY() - lineOne.getPoint().getY();
-        double z = lineTwo.getPoint().getY() - lineOne.getPoint().getZ();
+    public Point3D intersectingLines(Line lineOne, Line lineTwo) {
+        double x = lineOne.getPoint().getX() - lineTwo.getPoint().getX();
+        double y = lineOne.getPoint().getY() - lineTwo.getPoint().getY();
+        double z = lineOne.getPoint().getZ() - lineTwo.getPoint().getZ();
         Vector3D pointsDifference = new Vector3D(x, y ,z);
-        Vector3D first = pointsDifference.crossProduct(lineTwo.getVector());
-        Vector3D second = lineOne.getVector().crossProduct(lineTwo.getVector());
-        return null;
+        Vector3D second = pointsDifference.crossProduct(lineTwo.getVector());
+        Vector3D first = lineOne.getVector().crossProduct(lineTwo.getVector());
+
+        double lambda = Math.abs(first.getNorm() / second.getNorm());
+        double xIntersection = lineOne.getPoint().getX() + (lambda * lineOne.getVector().getX());
+        double yIntersection = lineOne.getPoint().getY() + (lambda * lineOne.getVector().getY());
+        double zIntersection = lineOne.getPoint().getZ() + (lambda * lineOne.getVector().getZ());
+
+        return new Point3D(xIntersection, yIntersection, zIntersection);
     }
 
     /**
