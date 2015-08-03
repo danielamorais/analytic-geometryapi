@@ -98,4 +98,14 @@ public class RelativePositionsTest {
         Assert.assertEquals(expected, actual);
 
     }
+
+    @Test
+    public void testgetRelativePosition_coincidentsLines() throws Exception {
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 2.0, 1.0)).setVector(new Vector3D(-1.0, 2.0, 1.0));
+        Line lineTwo = new Line().setPoint(new Point3D(1.0, 2.0, 1.0)).setVector(new Vector3D(-0.5, 1.0, 0.5));
+
+        String expected = "Coincidentes";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
 }

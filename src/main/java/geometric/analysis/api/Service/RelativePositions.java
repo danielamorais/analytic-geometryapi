@@ -3,9 +3,7 @@ package geometric.analysis.api.Service;
 import com.google.gson.Gson;
 import geometric.analysis.api.Entity.Line;
 import javafx.geometry.Point3D;
-import org.apache.commons.math3.analysis.differentiation.JacobianFunction;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.la4j.linear.JacobiSolver;
 
 import java.util.ArrayList;
 
@@ -34,12 +32,17 @@ public class RelativePositions {
                     return "Coincidentes";
                 }
             } else {
-                System.out.println(new Gson().toJson(intersectingLines(lineOne, lineTwo)));
-                return "Concorrentes";
+                return "Concorrentes\n" + new Gson().toJson(intersectingLines(lineOne, lineTwo));
             }
         }
     }
 
+    /**
+     * This method search a lambda in common in the two lines of equations
+     * @param lineOne Line one
+     * @param lineTwo Line two
+     * @return Point of intersection
+     */
     public Point3D intersectingLines(Line lineOne, Line lineTwo) {
         double x = lineOne.getPoint().getX() - lineTwo.getPoint().getX();
         double y = lineOne.getPoint().getY() - lineTwo.getPoint().getY();
