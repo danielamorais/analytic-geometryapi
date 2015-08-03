@@ -55,4 +55,32 @@ public class RelativePositionsTest {
         };
         Assert.assertEquals(-2, new RelativePositions().checkDeterminant(matrix));
     }
+
+    @Test
+    public void testIsParallel_isParallel() throws Exception {
+        Vector3D vectorOne = new Vector3D(2.0, -1.0, 1.0);
+        Vector3D vectorTwo = new Vector3D(-4.0, 2.0, -2.0);
+        Assert.assertEquals(true, new RelativePositions().isParallel(vectorOne, vectorTwo));
+    }
+
+    @Test
+    public void testIsParallel_isntParallel() throws Exception {
+        Vector3D vectorOne = new Vector3D(2.0, 3.0, 4.0);
+        Vector3D vectorTwo = new Vector3D(1.0, -1.0, -2.0);
+        Assert.assertEquals(false, new RelativePositions().isParallel(vectorOne, vectorTwo));
+    }
+
+    @Test
+    public void testAreDistinct_areDistinct() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 3.0, 1.0)).setVector(new Vector3D(-1.0, 2.0, -3.0));
+        Point3D point = new Point3D(1.0, 2.0 , 3.0);
+        Assert.assertEquals(true, new RelativePositions().areDistinct(point, lineOne));
+    }
+
+    @Test
+    public void testAreDistinct_coincidents() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(2.0, 0.0, 1.0)).setVector(new Vector3D(-4.0, 2.0, -2.0));
+        Point3D point = new Point3D(0.0, 1.0 , 0.0);
+        Assert.assertEquals(false, new RelativePositions().areDistinct(point, lineOne));
+    }
 }

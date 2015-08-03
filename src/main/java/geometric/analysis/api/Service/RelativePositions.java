@@ -1,10 +1,12 @@
 package geometric.analysis.api.Service;
 
 import geometric.analysis.api.Entity.Line;
+import javafx.geometry.Point3D;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Relative positions between two lines
@@ -24,11 +26,53 @@ public class RelativePositions {
         if (checkDeterminant(matrix) != 0) {
             return "Reversas";
         } else {
-            return isParallel(lineOne.getVector(), lineTwo.getVector()) ? "Paralelas" : "Concorrentes ou perpendiculares";
+            if (isParallel(lineOne.getVector(), lineTwo.getVector())) {
+                if (areDistinct(lineOne.getPoint(), lineTwo)) {
+                    return "Paralelas distintas";
+                } else {
+                    return "Coincidentes";
+                }
+            } else {
+                return intersectingLines(lineOne, lineTwo);
+            }
         }
     }
 
-    private boolean isParallel(Vector3D lineOneVector, Vector3D lineTwoVector) {
+    private String intersectingLines(Line lineOne, Line lineTwo) {
+        return null;
+    }
+
+    /**
+     * The code validates the line point one belong the line two
+     * then the lines are coincident. If not they will be different.
+     *
+     * @param pointOne Point belonging to line one
+     * @param line     Line two
+     * @return Distinct or coincidents
+     */
+    public boolean areDistinct(Point3D pointOne, Line line) {
+        Point3D pointTwo = line.getPoint();
+        Vector3D vectorTwo = line.getVector();
+
+        double x = (pointOne.getX() - pointTwo.getX()) / vectorTwo.getX();
+        double y = (pointOne.getY() - pointTwo.getY()) / vectorTwo.getY();
+        double z = (pointOne.getZ() - pointTwo.getZ()) / vectorTwo.getZ();
+        if (x == y && y == z) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This method checks if there is a K number in the set of real numbers
+     * such that satisfies the equation:
+     * k = (x1/x2) = (y1/y2) = (z1/z2)
+     *
+     * @param lineOneVector Director vector 1
+     * @param lineTwoVector Director vector 2
+     * @return Is parallel or not
+     */
+    public boolean isParallel(Vector3D lineOneVector, Vector3D lineTwoVector) {
         double xPosition = lineOneVector.getX() / lineTwoVector.getX();
         double yPosition = lineOneVector.getY() / lineTwoVector.getY();
         double zPosition = lineOneVector.getZ() / lineTwoVector.getZ();
@@ -48,7 +92,7 @@ public class RelativePositions {
      * @return Determinant
      */
     public int checkDeterminant(double[][] matrix) {
-        if(matrix.length != 3){
+        if (matrix.length != 3) {
             throw new IllegalArgumentException("This isn't not a matrix 3x3.");
         }
         double[][] matrixaux = new double[3][5];
@@ -102,7 +146,7 @@ public class RelativePositions {
         }
 
         int determinant = 0;
-        for(Integer value : determinantValues){
+        for (Integer value : determinantValues) {
             determinant += value;
         }
 
