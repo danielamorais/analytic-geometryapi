@@ -71,6 +71,13 @@ public class RelativePositionsTest {
     }
 
     @Test
+    public void testIsParallel_isntParallelTwo() throws Exception {
+        Vector3D vectorOne = new Vector3D(1.0, 2.0, 4.0);
+        Vector3D vectorTwo = new Vector3D(-1.0, -1.0, -1.0);
+        Assert.assertEquals(false, new RelativePositions().isParallel(vectorOne, vectorTwo));
+    }
+
+    @Test
     public void testAreDistinct_areDistinct() throws Exception{
         Line lineOne = new Line().setPoint(new Point3D(1.0, 3.0, 1.0)).setVector(new Vector3D(-1.0, 2.0, -3.0));
         Point3D point = new Point3D(1.0, 2.0 , 3.0);

@@ -2,11 +2,11 @@ package geometric.analysis.api.Service;
 
 import geometric.analysis.api.Entity.Line;
 import javafx.geometry.Point3D;
+import org.apache.commons.math3.analysis.differentiation.JacobianFunction;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.la4j.linear.JacobiSolver;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Relative positions between two lines
@@ -39,12 +39,18 @@ public class RelativePositions {
     }
 
     private String intersectingLines(Line lineOne, Line lineTwo) {
+        double x = lineTwo.getPoint().getX() - lineOne.getPoint().getX();
+        double y = lineTwo.getPoint().getY() - lineOne.getPoint().getY();
+        double z = lineTwo.getPoint().getY() - lineOne.getPoint().getZ();
+        Vector3D pointsDifference = new Vector3D(x, y ,z);
+        Vector3D first = pointsDifference.crossProduct(lineTwo.getVector());
+        Vector3D second = lineOne.getVector().crossProduct(lineTwo.getVector());
         return null;
     }
 
     /**
      * The code validates the line point one belong the line two
-     * then the lines are coincident. If not they will be different.
+     * then the lines are coincident. If not they will be distincit.
      *
      * @param pointOne Point belonging to line one
      * @param line     Line two
@@ -84,7 +90,7 @@ public class RelativePositions {
 
     /**
      * This method is respnsible for return the value of the determinant of the matrix.
-     * The algoritms follows the Carmer's rule.
+     * The algoritms follows the Cramer's rule.
      * First it's multiplied the elements from the main diagonal and after
      * the elements of the secundary diagonal
      *
@@ -153,7 +159,4 @@ public class RelativePositions {
         return determinant;
     }
 
-    public int getScalarProduct() {
-        throw new NotImplementedException();
-    }
 }
