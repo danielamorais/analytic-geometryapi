@@ -1,5 +1,4 @@
-/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Application.java
-/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Entity/Line.java
-/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/API/LineAPI.java
-/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Service/RelativePositions.java
-/home/danielamorais/geometric-analysisapi/com.danielamorais.geometricanalysis/src/main/java/geometric/analysis/api/Entity/LineTest.java
+/home/danielamorais/analytic-geometryapi/com.danielamorais.analyticgeometry/src/main/java/geometric/analysis/api/Service/RelativePositions.java
+/home/danielamorais/analytic-geometryapi/com.danielamorais.analyticgeometry/src/main/java/geometric/analysis/api/Entity/Line.java
+/home/danielamorais/analytic-geometryapi/com.danielamorais.analyticgeometry/src/main/java/geometric/analysis/api/Application.java
+/home/danielamorais/analytic-geometryapi/com.danielamorais.analyticgeometry/src/main/java/geometric/analysis/api/API/LineAPI.java
