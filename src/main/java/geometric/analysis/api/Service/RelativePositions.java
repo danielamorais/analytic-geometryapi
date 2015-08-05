@@ -52,23 +52,23 @@ public class RelativePositions {
         Vector3D second = pointsDifference.crossProduct(lineTwo.getVector());
         Vector3D first = lineOne.getVector().crossProduct(lineTwo.getVector());
 
-        double lambda = first.getNorm() / second.getNorm();
-        double xIntersectionOne = lineOne.getPoint().getX() + (lambda * lineOne.getVector().getX());
-        double yIntersectionOne = lineOne.getPoint().getY() + (lambda * lineOne.getVector().getY());
-        double zIntersectionOne = lineOne.getPoint().getZ() + (lambda * lineOne.getVector().getZ());
+        double lambda = second.getNorm() / first.getNorm();
+        double xIntersection = lineOne.getPoint().getX() + (lambda * lineOne.getVector().getX());
+        double yIntersection = lineOne.getPoint().getY() + (lambda * lineOne.getVector().getY());
+        double zIntersection = lineOne.getPoint().getZ() + (lambda * lineOne.getVector().getZ());
 
-        double xInLineTwo = (xIntersectionOne - lineTwo.getPoint().getX()) / lineTwo.getVector().getX();
-        double yInLineTwo = (yIntersectionOne - lineTwo.getPoint().getY()) / lineTwo.getVector().getY();
-        double zInLineTwo = (zIntersectionOne - lineTwo.getPoint().getZ()) / lineTwo.getVector().getZ();
+        double xInLineTwo = (xIntersection - lineTwo.getPoint().getX()) / lineTwo.getVector().getX();
+        double yInLineTwo = (yIntersection - lineTwo.getPoint().getY()) / lineTwo.getVector().getY();
+        double zInLineTwo = (zIntersection - lineTwo.getPoint().getZ()) / lineTwo.getVector().getZ();
 
         if (xInLineTwo == yInLineTwo && xInLineTwo == zInLineTwo) {
-            return new Point3D(xIntersectionOne, yIntersectionOne, zIntersectionOne);
+            return new Point3D(xIntersection, yIntersection, zIntersection);
         } else {
-            xIntersectionOne = lineOne.getPoint().getX() + (-1 * lambda * lineOne.getVector().getX());
-            yIntersectionOne = lineOne.getPoint().getY() + (-1 * lambda * lineOne.getVector().getY());
-            zIntersectionOne = lineOne.getPoint().getZ() + (-1 * lambda * lineOne.getVector().getZ());
+            xIntersection = lineOne.getPoint().getX() + (-1 * lambda * lineOne.getVector().getX());
+            yIntersection = lineOne.getPoint().getY() + (-1 * lambda * lineOne.getVector().getY());
+            zIntersection = lineOne.getPoint().getZ() + (-1 * lambda * lineOne.getVector().getZ());
 
-            return new Point3D(xIntersectionOne, yIntersectionOne, zIntersectionOne);
+            return new Point3D(xIntersection, yIntersection, zIntersection);
         }
     }
 
