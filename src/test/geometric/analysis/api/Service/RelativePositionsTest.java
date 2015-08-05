@@ -118,4 +118,93 @@ public class RelativePositionsTest {
 
     }
 
+    @Test
+    public void testgetRelativePosition_reversas() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 1.0, 1.0)).setVector(new Vector3D(2.0, 1.0, -3.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 1.0, 0.0)).setVector(new Vector3D(-1.0, 2.0, 0.0));
+
+        String expected = "Reversas";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testgetRelativePosition_concorrentes() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 2.0, 3.0)).setVector(new Vector3D(1.0, 2.0, 1.0));
+        Line lineTwo = new Line().setPoint(new Point3D(2.0, 4.0, 4.0)).setVector(new Vector3D(-1.0, 1.0, -1.0));
+
+        String expected = "Concorrentes\n" +
+                "{\"x\":2.0,\"y\":4.0,\"z\":4.0,\"hash\":0}";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+    /**
+     * r: X= (8,1,9) + λ(2,-1,3) s: X (3,-4,4) + µ(1,-2,2) P=(-2,6,-6)
+     * @throws Exception
+     */
+    @Test
+    public void testgetRelativePosition_concorrentesTwo() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(8.0, 1.0, 9.0)).setVector(new Vector3D(2.0, -1.0, 3.0));
+        Line lineTwo = new Line().setPoint(new Point3D(3.0, -4.0, 4.0)).setVector(new Vector3D(1.0, -2.0, 2.0));
+
+        String expected = "Concorrentes\n" +
+                "{\"x\":-2.0,\"y\":6.0,\"z\":-6.0,\"hash\":0}";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+    /**
+     * r: X= (-1,0,-1) + λ(2,3,2) s: X (0,0,0) + µ(1,2,0)
+     * @throws Exception
+     */
+    @Test
+    public void testgetRelativePosition_reversasTwo() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(-1.0, 0.0, -1.0)).setVector(new Vector3D(2.0, 3.0, 2.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 0.0, 0.0)).setVector(new Vector3D(1.0, 2.0, 0.0));
+
+        String expected = "Reversas";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+
+    /**
+     * r: X= (-3,2,1) + λ(1,2,3) s: X (0,2,2) + µ(1,1,-1)
+     */
+    @Test
+    public void testgetRelativePosition_reversasThree() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(-3.0, 2.0, 1.0)).setVector(new Vector3D(1.0, 2.0, 3.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 2.0, 2.0)).setVector(new Vector3D(1.0, 1.0, -1.0));
+
+        String expected = "Reversas";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testgetRelativePosition_reversasFour() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 5.0, -2.0)).setVector(new Vector3D(3.0, 5.0, 5.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 0.0, 1.0)).setVector(new Vector3D(1.0, -1.0, 4.0));
+
+        String expected = "Reversas";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+    /**
+     * r: X= (1,5,-2) + λ(3,3,5) s: X (0,0,1) + µ(1,-1,4) P=(-2,2,-7)
+     */
+    @Test
+    public void testgetRelativePosition_lambdaNegative() throws Exception{
+        Line lineOne = new Line().setPoint(new Point3D(1.0, 5.0, -2.0)).setVector(new Vector3D(3.0, 3.0, 5.0));
+        Line lineTwo = new Line().setPoint(new Point3D(0.0, 0.0, 1.0)).setVector(new Vector3D(1.0, -1.0, 4.0));
+
+        String expected = "Concorrentes\n" +
+                "{\"x\":-2.0,\"y\":2.0,\"z\":-7.0,\"hash\":0}";
+        String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
+        Assert.assertEquals(expected, actual);
+    }
+
+
 }

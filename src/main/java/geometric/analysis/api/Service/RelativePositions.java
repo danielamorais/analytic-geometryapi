@@ -52,12 +52,24 @@ public class RelativePositions {
         Vector3D second = pointsDifference.crossProduct(lineTwo.getVector());
         Vector3D first = lineOne.getVector().crossProduct(lineTwo.getVector());
 
-        double lambda = Math.abs(first.getNorm() / second.getNorm());
-        double xIntersection = lineOne.getPoint().getX() + (lambda * lineOne.getVector().getX());
-        double yIntersection = lineOne.getPoint().getY() + (lambda * lineOne.getVector().getY());
-        double zIntersection = lineOne.getPoint().getZ() + (lambda * lineOne.getVector().getZ());
+        double lambda = first.getNorm() / second.getNorm();
+        double xIntersectionOne = lineOne.getPoint().getX() + (lambda * lineOne.getVector().getX());
+        double yIntersectionOne = lineOne.getPoint().getY() + (lambda * lineOne.getVector().getY());
+        double zIntersectionOne = lineOne.getPoint().getZ() + (lambda * lineOne.getVector().getZ());
 
-        return new Point3D(xIntersection, yIntersection, zIntersection);
+        double xInLineTwo = (xIntersectionOne - lineTwo.getPoint().getX()) / lineTwo.getVector().getX();
+        double yInLineTwo = (yIntersectionOne - lineTwo.getPoint().getY()) / lineTwo.getVector().getY();
+        double zInLineTwo = (zIntersectionOne - lineTwo.getPoint().getZ()) / lineTwo.getVector().getZ();
+
+        if (xInLineTwo == yInLineTwo && xInLineTwo == zInLineTwo) {
+            return new Point3D(xIntersectionOne, yIntersectionOne, zIntersectionOne);
+        } else {
+            xIntersectionOne = lineOne.getPoint().getX() + (-1 * lambda * lineOne.getVector().getX());
+            yIntersectionOne = lineOne.getPoint().getY() + (-1 * lambda * lineOne.getVector().getY());
+            zIntersectionOne = lineOne.getPoint().getZ() + (-1 * lambda * lineOne.getVector().getZ());
+
+            return new Point3D(xIntersectionOne, yIntersectionOne, zIntersectionOne);
+        }
     }
 
     /**
@@ -85,6 +97,8 @@ public class RelativePositions {
                 double x = pointOne.getX() - pointTwo.getX();
                 double y = pointOne.getY() - pointTwo.getY();
                 return (x == 0.0 && y == 0.0);
+            } else {
+                return false;
             }
         }
 
@@ -105,22 +119,16 @@ public class RelativePositions {
     }
 
     /**
-     * This method checks if there is a K number in the set of real numbers
-     * such that satisfies the equation:
-     * k = (x1/x2) = (y1/y2) = (z1/z2)
+     * This method checks if the cross product between vector1 and
+     * vector2 is equals zero if are they will be paralells
      *
      * @param lineOneVector Director vector 1
      * @param lineTwoVector Director vector 2
      * @return Is parallel or not
      */
     public boolean isParallel(Vector3D lineOneVector, Vector3D lineTwoVector) {
-        double xPosition = lineOneVector.getX() / lineTwoVector.getX();
-        double yPosition = lineOneVector.getY() / lineTwoVector.getY();
-        double zPosition = lineOneVector.getZ() / lineTwoVector.getZ();
-        if (xPosition == yPosition && yPosition == zPosition) {
-            return true;
-        }
-        return false;
+        Vector3D result = lineOneVector.crossProduct(lineTwoVector);
+        return (result.getX() == 0.0 && result.getY() == 0.0 && result.getZ() == 0.0);
     }
 
     /**
