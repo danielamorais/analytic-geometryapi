@@ -26,10 +26,10 @@ public class RelativePositions {
             return "Reversas";
         } else {
             if (isParallel(lineOne.getVector(), lineTwo.getVector())) {
-                if (areDistinct(lineOne.getPoint(), lineTwo)) {
-                    return "Paralelas distintas";
-                } else {
+                if (areCoincidents(lineOne.getPoint(), lineTwo)) {
                     return "Coincidentes";
+                } else {
+                    return "Paralelas distintas";
                 }
             } else {
                 return "Concorrentes\n" + new Gson().toJson(intersectingLines(lineOne, lineTwo));
@@ -39,6 +39,7 @@ public class RelativePositions {
 
     /**
      * This method search a lambda in common in the two lines of equations
+     *
      * @param lineOne Line one
      * @param lineTwo Line two
      * @return Point of intersection
@@ -47,7 +48,7 @@ public class RelativePositions {
         double x = lineOne.getPoint().getX() - lineTwo.getPoint().getX();
         double y = lineOne.getPoint().getY() - lineTwo.getPoint().getY();
         double z = lineOne.getPoint().getZ() - lineTwo.getPoint().getZ();
-        Vector3D pointsDifference = new Vector3D(x, y ,z);
+        Vector3D pointsDifference = new Vector3D(x, y, z);
         Vector3D second = pointsDifference.crossProduct(lineTwo.getVector());
         Vector3D first = lineOne.getVector().crossProduct(lineTwo.getVector());
 
@@ -67,17 +68,40 @@ public class RelativePositions {
      * @param line     Line two
      * @return Distinct or coincidents
      */
-    public boolean areDistinct(Point3D pointOne, Line line) {
+    public boolean areCoincidents(Point3D pointOne, Line line) {
         Point3D pointTwo = line.getPoint();
         Vector3D vectorTwo = line.getVector();
+
+        if (containsCoordinatesEqualsZero(vectorTwo)) {
+            if (pointOne.getX() - pointTwo.getX() == 0.0) {
+                double y = pointOne.getY() - pointTwo.getY();
+                double z = pointOne.getZ() - pointTwo.getZ();
+                return (y == 0.0 && z == 0.0);
+            } else if (pointOne.getY() - pointTwo.getY() == 0.0) {
+                double x = pointOne.getX() - pointTwo.getX();
+                double z = pointOne.getZ() - pointTwo.getZ();
+                return (x == 0.0 && z == 0.0);
+            } else if (pointOne.getZ() - pointTwo.getZ() == 0.0) {
+                double x = pointOne.getX() - pointTwo.getX();
+                double y = pointOne.getY() - pointTwo.getY();
+                return (x == 0.0 && y == 0.0);
+            }
+        }
 
         double x = (pointOne.getX() - pointTwo.getX()) / vectorTwo.getX();
         double y = (pointOne.getY() - pointTwo.getY()) / vectorTwo.getY();
         double z = (pointOne.getZ() - pointTwo.getZ()) / vectorTwo.getZ();
-        if (x == y && y == z) {
-            return false;
-        }
-        return true;
+        return (x == y && y == z);
+    }
+
+    /**
+     * Checks all vector coordinates and returns if any coordinated equals zero
+     *
+     * @param vectorTwo Vector
+     * @return True if contains some coordinantes equals zero
+     */
+    private boolean containsCoordinatesEqualsZero(Vector3D vectorTwo) {
+        return (vectorTwo.getX() == 0.0 || vectorTwo.getY() == 0.0 || vectorTwo.getZ() == 0.0);
     }
 
     /**

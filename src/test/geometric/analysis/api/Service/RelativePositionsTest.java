@@ -78,14 +78,14 @@ public class RelativePositionsTest {
     public void testAreDistinct_areDistinct() throws Exception {
         Line lineOne = new Line().setPoint(new Point3D(1.0, 3.0, 1.0)).setVector(new Vector3D(-1.0, 2.0, -3.0));
         Point3D point = new Point3D(1.0, 2.0, 3.0);
-        Assert.assertEquals(true, new RelativePositions().areDistinct(point, lineOne));
+        Assert.assertEquals(false, new RelativePositions().areCoincidents(point, lineOne));
     }
 
     @Test
     public void testAreDistinct_coincidents() throws Exception {
         Line lineOne = new Line().setPoint(new Point3D(2.0, 0.0, 1.0)).setVector(new Vector3D(-4.0, 2.0, -2.0));
         Point3D point = new Point3D(0.0, 1.0, 0.0);
-        Assert.assertEquals(false, new RelativePositions().areDistinct(point, lineOne));
+        Assert.assertEquals(true, new RelativePositions().areCoincidents(point, lineOne));
     }
 
     @Test
@@ -108,4 +108,14 @@ public class RelativePositionsTest {
         String actual = new RelativePositions().getRelativePosition(lineOne, lineTwo);
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void testAreDistinct_cordinateEqualZero() throws Exception {
+        Line lineOne = new Line().setPoint(new Point3D(2.0, 0.0, 1.0)).setVector(new Vector3D(-4.0, 0.0, -2.0));
+        Point3D point = new Point3D(0.0, 1.0, 0.0);
+
+        Assert.assertEquals(false, new RelativePositions().areCoincidents(point, lineOne));
+
+    }
+
 }
